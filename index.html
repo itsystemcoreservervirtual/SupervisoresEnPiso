@@ -1,0 +1,160 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Supervisores en Piso ITT</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: consola de piso — control de hora/día arriba, franja de cobertura 06–24, luego tarjetas agrupadas por estado */
+:root{
+  --bg:#0a8fb8; --g1:#00b4d8; --g2:#0a5bd8; --g3:#13c08a; --grid:rgba(255,255,255,.10); --onbg:#ffffff; --onbg-muted:rgba(255,255,255,.82); --surface:#ffffff; --chip:#edf4f8; --line:#d9dfe3; --fg:#17232b; --muted:#5d6b75;
+  --accent:#0e6e8c; --accent-soft:#dcedf3;
+  --pas:#0f8a5f; --pas-soft:#dcf2e8; --act:#2b5fb8; --act-soft:#e2eafa;
+  --ref:#b26a00; --ref-soft:#fbeed8; --off:#8a96a0; --off-soft:#eceff1;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --body:"Barlow",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#06324a; --g1:#035a78; --g2:#082f7a; --g3:#06604a; --grid:rgba(255,255,255,.06); --onbg:#ffffff; --onbg-muted:rgba(255,255,255,.75); --surface:#132235; --chip:#1c3048; --line:#2a3943; --fg:#e4ecf0; --muted:#93a4ae;
+  --accent:#4cb6d6; --accent-soft:#16384a;
+  --pas:#3fcf94; --pas-soft:#123a2b; --act:#7ea6f0; --act-soft:#1c2c4c;
+  --ref:#f0a83c; --ref-soft:#3b2a12; --off:#7d8b94; --off-soft:#1e2a31; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#06324a; --g1:#035a78; --g2:#082f7a; --g3:#06604a; --grid:rgba(255,255,255,.06); --onbg:#ffffff; --onbg-muted:rgba(255,255,255,.75); --surface:#132235; --chip:#1c3048; --line:#2a3943; --fg:#e4ecf0; --muted:#93a4ae;
+  --accent:#4cb6d6; --accent-soft:#16384a;
+  --pas:#3fcf94; --pas-soft:#123a2b; --act:#7ea6f0; --act-soft:#1c2c4c;
+  --ref:#f0a83c; --ref-soft:#3b2a12; --off:#7d8b94; --off-soft:#1e2a31; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(135deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%);background-size:28px 28px,28px 28px,100% 100%;background-attachment:fixed;color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:1080px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
+header .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--onbg-muted)}
+header h1{color:var(--onbg)}
+.group>h2{color:var(--onbg)}.group>h2 small{color:var(--onbg-muted)!important}
+.wrap>.legend,.wrap>.legend code,.wrap>.note,.group>.empty{color:var(--onbg)}
+.hhead{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;justify-content:space-between;margin-bottom:10px}.hhead h2{margin:0!important}
+h1{font-family:var(--display);font-size:clamp(28px,5vw,40px);line-height:1.05;margin:4px 0 0;text-wrap:balance;letter-spacing:.01em}
+.controls{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-wrap:wrap;gap:18px 28px;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label,.field .lbl{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+input[type=time]{font-family:var(--mono);font-size:30px;font-weight:700;padding:6px 10px;border:2px solid var(--accent);border-radius:8px;background:var(--bg);color:var(--fg);width:170px}
+input[type=time]:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.days{display:flex;flex-wrap:wrap;gap:6px}
+.days button,.now{font-family:var(--mono);font-size:13px;font-weight:700;padding:9px 11px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+.days button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.now{background:var(--accent-soft);border-color:var(--accent);color:var(--fg)}
+.slotinfo{font-family:var(--mono);font-size:13px;color:var(--muted);margin-left:auto}
+.slotinfo b{color:var(--fg)}
+.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;border-top:4px solid var(--c)}
+.stat .n{font-family:var(--display);font-size:36px;line-height:1;font-variant-numeric:tabular-nums}
+.stat .t{font-size:13px;color:var(--muted);font-weight:500}
+.hours{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.hours h2,.group h2{font-family:var(--display);font-size:20px;margin:0 0 10px;letter-spacing:.02em}
+.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px}
+.hbtn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:8px;border:1px solid var(--line);background:var(--chip);color:var(--fg);cursor:pointer;font-family:var(--body)}
+.hbtn b{font-family:var(--mono);font-size:22px;line-height:1}
+.hbtn small{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hbtn.low small{color:var(--ref);font-weight:600}
+.hbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.hbtn[aria-pressed="true"] small{color:var(--surface)}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+.group{display:flex;flex-direction:column;gap:10px}
+.group h2 small{font-family:var(--mono);font-size:13px;color:var(--muted);font-weight:500;margin-left:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:8px;padding:11px 13px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card .name{font-weight:600;font-size:15px;line-height:1.25}
+.card .rng{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--fg)}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.pill{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 7px;border-radius:999px;background:var(--cs);color:var(--c)}
+.next{font-size:12px;color:var(--muted)}
+.empty{color:var(--muted);font-size:14px;padding:6px 0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:var(--muted)}
+.legend code{font-family:var(--mono);font-weight:700;color:var(--fg)}
+@media (max-width:640px){.summary{grid-template-columns:repeat(3,minmax(0,1fr))}.slotinfo{margin-left:0}input[type=time]{font-size:26px}}
+@media (prefers-reduced-motion:no-preference){.bar{transition:background .15s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Planning de supervisión · ITT · Masivo Convergente · Oct 2026</div>
+    <h1>¿Quién está en piso?</h1>
+  </header>
+  <section class="hours">
+    <div class="hhead"><h2>Elige la hora</h2><div class="slotinfo" id="slotinfo"></div></div>
+    <div class="hgrid" id="hgrid" role="group" aria-label="Horas"></div>
+    <div class="note">Debajo de cada hora: cuántos supervisores están en pasillo. En ámbar, menos de 3.</div>
+  </section>
+
+  <section class="summary" id="summary" aria-live="polite"></section>
+
+  <div id="groups" style="display:flex;flex-direction:column;gap:22px"></div>
+
+  <div class="legend">
+    <span><code>P</code> Pasillo</span><span><code>A</code> Auditorías y escuchas</span><span><code>FDB</code> Feedback / reunión con equipo</span><span><code>DCST</code> Devolución llamadas CSAT</span><span><code>R</code> Refrigerio</span>
+  </div>
+  <div class="note">Fuente: hoja PLANNING 1.1.</div>
+</div>
+
+<script>
+const SUPS = [{"n": "Oscar David Fernandez Socola", "s": 6, "e": 15, "d": "DOM", "a": ["P", "P", "A", "A", "P", "P", "FDB", "FDB", "A", "A", "DCST", "DCST", "R", "R", "P", "P", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Tracy Nieves Jenn Mendoza Amaya", "s": 6, "e": 15, "d": null, "a": ["A", "A", "A", "A", "P", "P", "DCST", "DCST", "A", "A", "P", "P", "R", "R", "FDB", "FDB", "P", "P", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Karolay Gised Ruiz Calderon", "s": 7, "e": 16, "d": "SÁB", "a": ["", "", "P", "P", "A", "A", "P", "P", "FDB", "FDB", "P", "P", "R", "R", "DCST", "DCST", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Jarumy Alexandra Castro Gutierrez", "s": 7, "e": 16, "d": "DOM", "a": ["", "", "P", "P", "A", "A", "P", "P", "DCST", "DCST", "FDB", "FDB", "P", "P", "R", "R", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Karla Fabiola Yarleque Farfan", "s": 8, "e": 17, "d": "SÁB", "a": ["", "", "", "", "P", "P", "A", "A", "P", "P", "DCST", "DCST", "FDB", "FDB", "R", "R", "P", "P", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Guillermo Alonso Carrion Espinosa", "s": 9, "e": 18, "d": "SÁB", "a": ["", "", "", "", "", "", "P", "P", "A", "A", "P", "P", "P", "P", "DCST", "DCST", "R", "R", "A", "A", "A", "A", "FDB", "FDB", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Mary Elena Zapata Viera", "s": 9, "e": 18, "d": null, "a": ["", "", "", "", "", "", "A", "A", "P", "P", "A", "A", "P", "P", "R", "R", "FDB", "FDB", "DCST", "DCST", "P", "P", "A", "A", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Joaquin Eduardo Elespuru Guerra", "s": 10, "e": 19, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "P", "P", "A", "A", "A", "A", "P", "P", "R", "R", "P", "P", "DCST", "DCST", "FDB", "FDB", "A", "A", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Billy Gianfranco Huertas Suarez", "s": 10, "e": 19, "d": null, "a": ["", "", "", "", "", "", "", "", "A", "A", "A", "A", "DCST", "DCST", "P", "P", "FDB", "FDB", "R", "R", "P", "P", "P", "P", "A", "A", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Tatiana Maribel Pulache Sosa", "s": 12, "e": 21, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "R", "R", "P", "P", "A", "A", "A", "A", "FDB", "FDB", "DCST", "DCST", "P", "P", "P", "P", "A", "A", "", "", "", "", "", "", "", ""]}, {"n": "Carina Ines Merino Hernández", "s": 13, "e": 22, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "R", "R", "P", "P", "P", "P", "A", "A", "DCST", "DCST", "A", "A", "P", "P", "FDB", "FDB", "A", "A", "", "", "", ""]}, {"n": "Ricardo Manuel Gamboa Quinde", "s": 9, "e": 18, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "DCST", "DCST", "A", "A", "A", "A", "R", "R", "P", "P", "FDB", "FDB", "P", "P", "A", "A", "P", "P", "", "", "", ""]}, {"n": "Fabricio Nickolas Cordero Fuentes", "s": 14, "e": 23, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "P", "P", "DCST", "DCST", "P", "P", "R", "R", "A", "A", "A", "A", "P", "P", "FDB", "FDB", "A", "A", "", ""]}, {"n": "Dany Daniel Farfan Mendoza", "s": 15, "e": 24, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "DCST", "DCST", "P", "P", "A", "A", "R", "R", "A", "A", "FDB", "FDB", "P", "P", "A", "A", "P", "P", "", ""]}, {"n": "Jackeline Lisbeth Alburqueque Colmenares", "s": 15, "e": 24, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "A", "A", "A", "A", "A", "A", "P", "P", "R", "R", "DCST", "DCST", "P", "P", "FDB", "FDB", "P", "P"]}, {"n": "Elvis Darwing Yamunaque Castillo", "s": 14, "e": 23, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "A", "A", "A", "A", "R", "R", "P", "P", "P", "P", "DCST", "DCST", "FDB", "FDB", "P", "P", "A", "A"]}];
+const ACT = {P:"Pasillo",A:"Auditorías y escuchas",FDB:"Feedback / reunión",DCST:"Devolución CSAT",R:"Refrigerio","":"Sin actividad asignada"};
+const DAYS = ["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
+const ST = {
+  pas:{t:"En pasillo",c:"--pas",cs:"--pas-soft"},
+  act:{t:"En piso · otra actividad",c:"--act",cs:"--act-soft"},
+  ref:{t:"En refrigerio",c:"--ref",cs:"--ref-soft"},
+  des:{t:"Descansa hoy",c:"--off",cs:"--off-soft"}
+};
+const pad = n => String(n).padStart(2,"0");
+const tm = slot => { const m=360+slot*30; return `${pad(Math.floor(m/60)%24)}:${pad(m%60)}`; };
+let day = 0, hour = 10;
+
+function inShift(s,i){ return !!s.a[i]; }
+function kind(a){ return a==="P"?"pas":a==="R"?"ref":"act"; }
+// actividades de un supervisor dentro de la hora elegida (2 franjas), cada una con su bloque continuo
+function blocks(s,h){
+  const out=[]; const i0=(h-6)*2;
+  for(const i of [i0,i0+1]){
+    if(!inShift(s,i)) continue;
+    const a=s.a[i];
+    if(out.some(o=>o.a===a && i>=o.from && i<o.to)) continue;
+    let f=i,e=i+1;
+    while(f-1>=0 && inShift(s,f-1) && s.a[f-1]===a) f--;
+    while(e<36 && inShift(s,e) && s.a[e]===a) e++;
+    out.push({a,from:f,to:e});
+  }
+  return out;
+}
+function pasCount(h){ return SUPS.filter(s=>blocks(s,h).some(b=>b.a==="P")).length; }
+
+function render(){
+  document.getElementById("hgrid").innerHTML=[...Array(18)].map((_,k)=>{const h=6+k,c=pasCount(h);
+    return `<button type="button" class="hbtn${c<3?" low":""}" data-h="${h}" aria-pressed="${h===hour}"><b>${pad(h)}</b><small>${c} en pasillo</small></button>`;}).join("");
+  document.getElementById("slotinfo").innerHTML=`Hora <b>${pad(hour)}:00 – ${pad((hour+1)%24)}:00</b>`;
+  const groups={pas:[],act:[],ref:[],des:[]};
+  SUPS.forEach(s=>{
+        blocks(s,hour).forEach(b=>groups[kind(b.a)].push({s,b}));
+  });
+  const uniq=k=>new Set(groups[k].map(x=>x.s.n)).size;
+  const enPiso=new Set([...groups.pas,...groups.act].map(x=>x.s.n)).size;
+  document.getElementById("summary").innerHTML=[
+    ["En piso (total)",enPiso,"--accent"],["En pasillo",uniq("pas"),"--pas"],["En refrigerio",uniq("ref"),"--ref"]
+  ].map(([t,n,c])=>`<div class="stat" style="--c:var(${c})"><div class="n">${n}</div><div class="t">${t}</div></div>`).join("");
+  document.getElementById("groups").innerHTML=["pas","act","ref"].map(k=>{
+    const L=groups[k].sort((x,y)=>k==="des"?0:x.b.from-y.b.from), st=ST[k];
+    const cards=L.map(({s,b})=>{
+      const body = k==="des"
+        ? `<div class="meta"><span class="pill">DESCANSO</span> No viene este día</div>`
+        : `<div class="meta"><span class="pill">${b.a||"—"}</span> ${ACT[b.a]}</div><div class="rng">${tm(b.from)} – ${tm(b.to)}</div>`;
+      return `<article class="card" style="--c:var(${st.c});--cs:var(${st.cs})"><div class="name">${s.n}</div>${body}</article>`;
+    }).join("");
+    return `<section class="group"><h2>${st.t}<small>${uniq(k)}</small></h2>${L.length?`<div class="cards">${cards}</div>`:`<p class="empty">Nadie en esta hora.</p>`}</section>`;
+  }).join("");
+}
+document.getElementById("hgrid").addEventListener("click",e=>{const b=e.target.closest(".hbtn");if(b){hour=+b.dataset.h;render();}});
+function setNow(){
+  const l=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Lima"}));
+  const h=l.getHours(); hour=(h>=6&&h<=23)?h:10; render();
+}
+setNow();
+</script>
+
+</body></html>
