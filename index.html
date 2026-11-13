@@ -6,22 +6,13 @@
 <style>
 /* Layout: consola de piso — control de hora/día arriba, franja de cobertura 06–24, luego tarjetas agrupadas por estado */
 :root{
-  --bg:#0a8fb8; --g1:#00b4d8; --g2:#0a5bd8; --g3:#13c08a; --grid:rgba(255,255,255,.10); --onbg:#ffffff; --onbg-muted:rgba(255,255,255,.82); --surface:#ffffff; --chip:#edf4f8; --line:#d9dfe3; --fg:#17232b; --muted:#5d6b75;
-  --accent:#0e6e8c; --accent-soft:#dcedf3;
-  --pas:#0f8a5f; --pas-soft:#dcf2e8; --act:#2b5fb8; --act-soft:#e2eafa;
-  --ref:#b26a00; --ref-soft:#fbeed8; --off:#8a96a0; --off-soft:#eceff1;
+  color-scheme:dark;
+  --bg:#070d1c; --g1:#0a1630; --g2:#10286a; --g3:#0a4a5c; --grid:rgba(120,170,255,.08); --onbg:#ffffff; --onbg-muted:rgba(255,255,255,.75); --surface:#111b33; --chip:#1a2848; --line:#27375c; --fg:#e8eefc; --muted:#9db0d4;
+  --accent:#4cc9f0; --accent-soft:#12324d;
+  --pas:#3fcf94; --pas-soft:#123a2b; --act:#7ea6f0; --act-soft:#1c2c4c;
+  --ref:#f0a83c; --ref-soft:#3b2a12; --off:#7d8b94; --off-soft:#1e2a31; --pr:#2f6bff; --pr-dark:#062a7a;
   --display:"Barlow Condensed","Arial Narrow",sans-serif; --body:"Barlow",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#06324a; --g1:#035a78; --g2:#082f7a; --g3:#06604a; --grid:rgba(255,255,255,.06); --onbg:#ffffff; --onbg-muted:rgba(255,255,255,.75); --surface:#132235; --chip:#1c3048; --line:#2a3943; --fg:#e4ecf0; --muted:#93a4ae;
-  --accent:#4cb6d6; --accent-soft:#16384a;
-  --pas:#3fcf94; --pas-soft:#123a2b; --act:#7ea6f0; --act-soft:#1c2c4c;
-  --ref:#f0a83c; --ref-soft:#3b2a12; --off:#7d8b94; --off-soft:#1e2a31; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#06324a; --g1:#035a78; --g2:#082f7a; --g3:#06604a; --grid:rgba(255,255,255,.06); --onbg:#ffffff; --onbg-muted:rgba(255,255,255,.75); --surface:#132235; --chip:#1c3048; --line:#2a3943; --fg:#e4ecf0; --muted:#93a4ae;
-  --accent:#4cb6d6; --accent-soft:#16384a;
-  --pas:#3fcf94; --pas-soft:#123a2b; --act:#7ea6f0; --act-soft:#1c2c4c;
-  --ref:#f0a83c; --ref-soft:#3b2a12; --off:#7d8b94; --off-soft:#1e2a31; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(135deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%);background-size:28px 28px,28px 28px,100% 100%;background-attachment:fixed;color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45}
 .wrap{max-width:1080px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
@@ -42,7 +33,7 @@ input[type=time]:focus-visible,button:focus-visible{outline:3px solid var(--acce
 .now{background:var(--accent-soft);border-color:var(--accent);color:var(--fg)}
 .slotinfo{font-family:var(--mono);font-size:13px;color:var(--muted);margin-left:auto}
 .slotinfo b{color:var(--fg)}
-.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;border-top:4px solid var(--c)}
 .stat .n{font-family:var(--display);font-size:36px;line-height:1;font-variant-numeric:tabular-nums}
 .stat .t{font-size:13px;color:var(--muted);font-weight:500}
@@ -68,8 +59,19 @@ input[type=time]:focus-visible,button:focus-visible{outline:3px solid var(--acce
 .empty{color:var(--muted);font-size:14px;padding:6px 0}
 .legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:var(--muted)}
 .legend code{font-family:var(--mono);font-weight:700;color:var(--fg)}
-@media (max-width:640px){.summary{grid-template-columns:repeat(3,minmax(0,1fr))}.slotinfo{margin-left:0}input[type=time]{font-size:26px}}
+@media (max-width:640px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.slotinfo{margin-left:0}input[type=time]{font-size:26px}}
 @media (prefers-reduced-motion:no-preference){.bar{transition:background .15s}}
+.help{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;background:var(--pr);color:#fff;text-decoration:none;border:2px solid #fff;border-radius:10px;padding:14px 16px;font-weight:600;font-size:16px;box-shadow:0 2px 10px rgba(6,30,100,.5)}
+.help b{font-family:var(--mono);font-size:13px;background:#fff;color:#062a7a;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.help:hover{filter:brightness(1.08)}.help:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.hbtn .prtag{color:var(--pr);font-weight:700}
+.hbtn[aria-pressed="true"] .prtag{color:var(--surface)}
+.card.pr{background:var(--pr);border-color:#fff;border-left:6px solid #fff;color:#fff;box-shadow:0 2px 10px rgba(6,30,100,.5)}
+.card.pr .name,.card.pr .rng,.card.pr .meta,.card.pr .next{color:#fff}
+.card.pr .badge{align-self:flex-start;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#fff;color:#062a7a;padding:3px 9px;border-radius:999px}
+.card.pr .pill{background:rgba(255,255,255,.22);color:#fff}
+.legend .lpr{background:var(--pr);color:#fff;padding:1px 8px;border-radius:999px}
+.legend .lpr code{color:#fff}
 </style>
 
 <div class="wrap">
@@ -80,26 +82,26 @@ input[type=time]:focus-visible,button:focus-visible{outline:3px solid var(--acce
   <section class="hours">
     <div class="hhead"><h2>Elige la hora</h2><div class="slotinfo" id="slotinfo"></div></div>
     <div class="hgrid" id="hgrid" role="group" aria-label="Horas"></div>
-    <div class="note">Debajo de cada hora: cuántos supervisores están en pasillo. En ámbar, menos de 3.</div>
+    <div class="note">Debajo de cada hora: cuántos supervisores están en pasillo (físico + remoto) y, en azul, cuántos son pasillaje remoto. En ámbar, menos de 3.</div>
   </section>
 
-  <section class="summary" id="summary" aria-live="polite"></section>
+  <a class="help" href="https://teams.microsoft.com/meet/3370461237964977?p=lMf64PWK7NCTKCi1yv" target="_blank" rel="noopener noreferrer"><span>Si eres personal remoto y necesitas ayuda, ingresa a este link</span><b>Unirme en Teams →</b></a>
 
   <div id="groups" style="display:flex;flex-direction:column;gap:22px"></div>
 
   <div class="legend">
-    <span><code>P</code> Pasillo</span><span><code>A</code> Auditorías y escuchas</span><span><code>FDB</code> Feedback / reunión con equipo</span><span><code>DCST</code> Devolución llamadas CSAT</span><span><code>R</code> Refrigerio</span>
+    <span><code>P</code> Pasillo</span><span class="lpr"><code>PR</code> Pasillaje remoto (consultas, tickets Jira, incidencias de aplicativos o PC)</span><span><code>A</code> Auditorías y escuchas</span><span><code>FDB</code> Feedback / reunión con equipo</span><span><code>DCST</code> Devolución llamadas CSAT</span><span><code>R</code> Refrigerio</span>
   </div>
-  <div class="note">Fuente: hoja PLANNING 1.1.</div>
+  <div class="note">Fuente: hoja PLANNING 1.1. (vista v6)</div>
 </div>
 
 <script>
-const SUPS = [{"n": "Oscar David Fernandez Socola", "s": 6, "e": 15, "d": "DOM", "a": ["P", "P", "A", "A", "P", "P", "FDB", "FDB", "A", "A", "DCST", "DCST", "R", "R", "P", "P", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Tracy Nieves Jenn Mendoza Amaya", "s": 6, "e": 15, "d": null, "a": ["A", "A", "A", "A", "P", "P", "DCST", "DCST", "A", "A", "P", "P", "R", "R", "FDB", "FDB", "P", "P", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Karolay Gised Ruiz Calderon", "s": 7, "e": 16, "d": "SÁB", "a": ["", "", "P", "P", "A", "A", "P", "P", "FDB", "FDB", "P", "P", "R", "R", "DCST", "DCST", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Jarumy Alexandra Castro Gutierrez", "s": 7, "e": 16, "d": "DOM", "a": ["", "", "P", "P", "A", "A", "P", "P", "DCST", "DCST", "FDB", "FDB", "P", "P", "R", "R", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Karla Fabiola Yarleque Farfan", "s": 8, "e": 17, "d": "SÁB", "a": ["", "", "", "", "P", "P", "A", "A", "P", "P", "DCST", "DCST", "FDB", "FDB", "R", "R", "P", "P", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Guillermo Alonso Carrion Espinosa", "s": 9, "e": 18, "d": "SÁB", "a": ["", "", "", "", "", "", "P", "P", "A", "A", "P", "P", "P", "P", "DCST", "DCST", "R", "R", "A", "A", "A", "A", "FDB", "FDB", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Mary Elena Zapata Viera", "s": 9, "e": 18, "d": null, "a": ["", "", "", "", "", "", "A", "A", "P", "P", "A", "A", "P", "P", "R", "R", "FDB", "FDB", "DCST", "DCST", "P", "P", "A", "A", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Joaquin Eduardo Elespuru Guerra", "s": 10, "e": 19, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "P", "P", "A", "A", "A", "A", "P", "P", "R", "R", "P", "P", "DCST", "DCST", "FDB", "FDB", "A", "A", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Billy Gianfranco Huertas Suarez", "s": 10, "e": 19, "d": null, "a": ["", "", "", "", "", "", "", "", "A", "A", "A", "A", "DCST", "DCST", "P", "P", "FDB", "FDB", "R", "R", "P", "P", "P", "P", "A", "A", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Tatiana Maribel Pulache Sosa", "s": 12, "e": 21, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "R", "R", "P", "P", "A", "A", "A", "A", "FDB", "FDB", "DCST", "DCST", "P", "P", "P", "P", "A", "A", "", "", "", "", "", "", "", ""]}, {"n": "Carina Ines Merino Hernández", "s": 13, "e": 22, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "R", "R", "P", "P", "P", "P", "A", "A", "DCST", "DCST", "A", "A", "P", "P", "FDB", "FDB", "A", "A", "", "", "", ""]}, {"n": "Ricardo Manuel Gamboa Quinde", "s": 9, "e": 18, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "DCST", "DCST", "A", "A", "A", "A", "R", "R", "P", "P", "FDB", "FDB", "P", "P", "A", "A", "P", "P", "", "", "", ""]}, {"n": "Fabricio Nickolas Cordero Fuentes", "s": 14, "e": 23, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "P", "P", "DCST", "DCST", "P", "P", "R", "R", "A", "A", "A", "A", "P", "P", "FDB", "FDB", "A", "A", "", ""]}, {"n": "Dany Daniel Farfan Mendoza", "s": 15, "e": 24, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "DCST", "DCST", "P", "P", "A", "A", "R", "R", "A", "A", "FDB", "FDB", "P", "P", "A", "A", "P", "P", "", ""]}, {"n": "Jackeline Lisbeth Alburqueque Colmenares", "s": 15, "e": 24, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "A", "A", "A", "A", "A", "A", "P", "P", "R", "R", "DCST", "DCST", "P", "P", "FDB", "FDB", "P", "P"]}, {"n": "Elvis Darwing Yamunaque Castillo", "s": 14, "e": 23, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "A", "A", "A", "A", "R", "R", "P", "P", "P", "P", "DCST", "DCST", "FDB", "FDB", "P", "P", "A", "A"]}];
-const ACT = {P:"Pasillo",A:"Auditorías y escuchas",FDB:"Feedback / reunión",DCST:"Devolución CSAT",R:"Refrigerio","":"Sin actividad asignada"};
+const SUPS = [{"n": "Oscar David Fernandez Socola", "s": 6, "e": 15, "d": "DOM", "a": ["P", "P", "A", "A", "P", "P", "FDB", "FDB", "A", "A", "DCST", "DCST", "R", "R", "PR", "PR", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Tracy Nieves Jenn Mendoza Amaya", "s": 6, "e": 15, "d": null, "a": ["A", "A", "A", "A", "PR", "PR", "DCST", "DCST", "A", "A", "P", "P", "R", "R", "FDB", "FDB", "P", "P", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Karolay Gised Ruiz Calderon", "s": 7, "e": 16, "d": "SÁB", "a": ["", "", "P", "P", "A", "A", "PR", "PR", "FDB", "FDB", "P", "P", "R", "R", "DCST", "DCST", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Jarumy Alexandra Castro Gutierrez", "s": 7, "e": 16, "d": "DOM", "a": ["", "", "PR", "PR", "A", "A", "P", "P", "DCST", "DCST", "FDB", "FDB", "P", "P", "R", "R", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Karla Fabiola Yarleque Farfan", "s": 8, "e": 17, "d": "SÁB", "a": ["", "", "", "", "P", "P", "A", "A", "PR", "PR", "DCST", "DCST", "FDB", "FDB", "R", "R", "P", "P", "A", "A", "A", "A", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Guillermo Alonso Carrion Espinosa", "s": 9, "e": 18, "d": "SÁB", "a": ["", "", "", "", "", "", "P", "P", "A", "A", "PR", "PR", "P", "P", "DCST", "DCST", "R", "R", "A", "A", "A", "A", "FDB", "FDB", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Mary Elena Zapata Viera", "s": 9, "e": 18, "d": null, "a": ["", "", "", "", "", "", "A", "A", "P", "P", "A", "A", "P", "P", "R", "R", "FDB", "FDB", "DCST", "DCST", "PR", "PR", "A", "A", "", "", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Joaquin Eduardo Elespuru Guerra", "s": 10, "e": 19, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "P", "P", "A", "A", "A", "A", "P", "P", "R", "R", "PR", "PR", "DCST", "DCST", "FDB", "FDB", "A", "A", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Billy Gianfranco Huertas Suarez", "s": 10, "e": 19, "d": null, "a": ["", "", "", "", "", "", "", "", "A", "A", "A", "A", "DCST", "DCST", "P", "P", "R", "R", "FDB", "FDB", "P", "P", "PR", "PR", "A", "A", "", "", "", "", "", "", "", "", "", ""]}, {"n": "Tatiana Maribel Pulache Sosa", "s": 12, "e": 21, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "R", "R", "PR", "PR", "A", "A", "A", "A", "FDB", "FDB", "DCST", "DCST", "P", "P", "P", "P", "A", "A", "", "", "", "", "", "", "", ""]}, {"n": "Carina Ines Merino Hernández", "s": 13, "e": 22, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "R", "R", "PR", "PR", "P", "P", "A", "A", "DCST", "DCST", "A", "A", "P", "P", "FDB", "FDB", "A", "A", "", "", "", ""]}, {"n": "Ricardo Manuel Gamboa Quinde", "s": 9, "e": 18, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "DCST", "DCST", "A", "A", "A", "A", "R", "R", "P", "P", "FDB", "FDB", "P", "P", "A", "A", "PR", "PR", "", "", "", ""]}, {"n": "Fabricio Nickolas Cordero Fuentes", "s": 14, "e": 23, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "P", "P", "DCST", "DCST", "P", "P", "R", "R", "A", "A", "A", "A", "PR", "PR", "FDB", "FDB", "A", "A", "", ""]}, {"n": "Dany Daniel Farfan Mendoza", "s": 15, "e": 24, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "DCST", "DCST", "P", "P", "A", "A", "R", "R", "A", "A", "FDB", "FDB", "P", "P", "A", "A", "PR", "PR", "", ""]}, {"n": "Jackeline Lisbeth Alburqueque Colmenares", "s": 15, "e": 24, "d": "SÁB", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "A", "A", "A", "A", "A", "A", "PR", "PR", "R", "R", "DCST", "DCST", "P", "P", "FDB", "FDB", "P", "P"]}, {"n": "Elvis Darwing Yamunaque Castillo", "s": 14, "e": 23, "d": "DOM", "a": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "A", "A", "A", "A", "R", "R", "P", "P", "PR", "PR", "DCST", "DCST", "FDB", "FDB", "P", "P", "A", "A"]}];
+const ACT = {P:"Pasillo",PR:"Consultas, tickets Jira, incidencias de aplicativos o PC",A:"Auditorías y escuchas",FDB:"Feedback / reunión",DCST:"Devolución CSAT",R:"Refrigerio","":"Sin actividad asignada"};
 const DAYS = ["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
 const ST = {
-  pas:{t:"En pasillo",c:"--pas",cs:"--pas-soft"},
-  act:{t:"En piso · otra actividad",c:"--act",cs:"--act-soft"},
+  pas:{t:"Pasillaje",c:"--pas",cs:"--pas-soft"},
+  act:{t:"Auditorías o escuchas",c:"--act",cs:"--act-soft"},
   ref:{t:"En refrigerio",c:"--ref",cs:"--ref-soft"},
   des:{t:"Descansa hoy",c:"--off",cs:"--off-soft"}
 };
@@ -108,7 +110,7 @@ const tm = slot => { const m=360+slot*30; return `${pad(Math.floor(m/60)%24)}:${
 let day = 0, hour = 10;
 
 function inShift(s,i){ return !!s.a[i]; }
-function kind(a){ return a==="P"?"pas":a==="R"?"ref":"act"; }
+function kind(a){ return (a==="P"||a==="PR")?"pas":a==="R"?"ref":"act"; }
 // actividades de un supervisor dentro de la hora elegida (2 franjas), cada una con su bloque continuo
 function blocks(s,h){
   const out=[]; const i0=(h-6)*2;
@@ -123,24 +125,22 @@ function blocks(s,h){
   }
   return out;
 }
-function pasCount(h){ return SUPS.filter(s=>blocks(s,h).some(b=>b.a==="P")).length; }
+function pasCount(h){ return SUPS.filter(s=>blocks(s,h).some(b=>b.a==="P"||b.a==="PR")).length; }
+function prCount(h){ return SUPS.filter(s=>blocks(s,h).some(b=>b.a==="PR")).length; }
 
 function render(){
-  document.getElementById("hgrid").innerHTML=[...Array(18)].map((_,k)=>{const h=6+k,c=pasCount(h);
-    return `<button type="button" class="hbtn${c<3?" low":""}" data-h="${h}" aria-pressed="${h===hour}"><b>${pad(h)}</b><small>${c} en pasillo</small></button>`;}).join("");
+  document.getElementById("hgrid").innerHTML=[...Array(18)].map((_,k)=>{const h=6+k,c=pasCount(h),r=prCount(h);
+    return `<button type="button" class="hbtn${c<3?" low":""}" data-h="${h}" aria-pressed="${h===hour}"><b>${pad(h)}</b><small>${c} en pasillo</small>${r?`<small class="prtag">${r} remoto</small>`:""}</button>`;}).join("");
   document.getElementById("slotinfo").innerHTML=`Hora <b>${pad(hour)}:00 – ${pad((hour+1)%24)}:00</b>`;
   const groups={pas:[],act:[],ref:[],des:[]};
   SUPS.forEach(s=>{
         blocks(s,hour).forEach(b=>groups[kind(b.a)].push({s,b}));
   });
   const uniq=k=>new Set(groups[k].map(x=>x.s.n)).size;
-  const enPiso=new Set([...groups.pas,...groups.act].map(x=>x.s.n)).size;
-  document.getElementById("summary").innerHTML=[
-    ["En piso (total)",enPiso,"--accent"],["En pasillo",uniq("pas"),"--pas"],["En refrigerio",uniq("ref"),"--ref"]
-  ].map(([t,n,c])=>`<div class="stat" style="--c:var(${c})"><div class="n">${n}</div><div class="t">${t}</div></div>`).join("");
   document.getElementById("groups").innerHTML=["pas","act","ref"].map(k=>{
-    const L=groups[k].sort((x,y)=>k==="des"?0:x.b.from-y.b.from), st=ST[k];
+    const L=groups[k].sort((x,y)=>k==="des"?0:((y.b.a==="PR")-(x.b.a==="PR"))||x.b.from-y.b.from), st=ST[k];
     const cards=L.map(({s,b})=>{
+      if(b.a==="PR") return `<article class="card pr" style="--c:var(--pr)"><div class="badge">Pasillaje remoto</div><div class="name">${s.n}</div><div class="meta">${ACT.PR}</div><div class="rng">${tm(b.from)} – ${tm(b.to)}</div></article>`;
       const body = k==="des"
         ? `<div class="meta"><span class="pill">DESCANSO</span> No viene este día</div>`
         : `<div class="meta"><span class="pill">${b.a||"—"}</span> ${ACT[b.a]}</div><div class="rng">${tm(b.from)} – ${tm(b.to)}</div>`;
